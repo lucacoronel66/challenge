@@ -8,13 +8,14 @@ import uuid
 app = FastAPI()
 
 
- #Mini API en FastAPI.
-
+ # Definición del modelo de datos para el medicamento
 class Medicamento(BaseModel):
     product_id: int
     lot_id: str
     quantity: int
 
+
+# Ruta para procesar un medicamento
 @app.post("/procesar/")
 def procesar_medicamento(medicamento: Medicamento):
     
@@ -37,6 +38,8 @@ def procesar_medicamento(medicamento: Medicamento):
             content={"error": "Error en el servidor", "details": str(e)},
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
+    
+# Ruta para obtener el estado del medicamento
 @app.get("/estado/{processing_id}")
 def obtener_estado(processing_id: str):
     try:
