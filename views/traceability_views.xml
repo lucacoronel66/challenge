@@ -1,0 +1,75 @@
+<odoo>
+    <data>
+
+        <!-- Vista de búsqueda (Search View) -->
+        <record id="view_traceability_medicamento_filter" model="ir.ui.view">
+            <field name="name">traceability.medicamento.filter</field>
+            <field name="model">traceability.medicamento</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Trazabilidad">
+                    <field name="product_id"/>
+                    <field name="lot_id"/>
+
+                    <!-- Filtro por estado: Pendiente -->
+                    <filter name="filter_pending" string="Pendiente" domain="[('state', '=', 'pendiente')]"/>
+                    
+                    <!-- Filtro por estado: Procesado -->
+                    <filter name="filter_processed" string="Procesado" domain="[('state', '=', 'procesado')]"/>
+                    
+                    <!-- Filtro por ambos estados -->
+                    <filter name="filter_all" string="Todos" domain="[]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Vista de lista (Tree View) -->
+        <record id="view_traceability_medicamento_tree" model="ir.ui.view">
+            <field name="name">traceability.medicamento.tree</field>
+            <field name="model">traceability.medicamento</field>
+            <field name="arch" type="xml">
+                <tree string="Trazabilidad de Medicamentos">
+                    <field name="product_id"/>
+                    <field name="lot_id"/>
+                    <field name="state"/>
+                    <field name="processing_date"/>
+                    <field name="processing_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista de formulario (Form View) -->
+        <record id="view_traceability_medicamento_form" model="ir.ui.view">
+            <field name="name">traceability.medicamento.form</field>
+            <field name="model">traceability.medicamento</field>
+            <field name="arch" type="xml">
+                <form string="Trazado de Medicamentos">
+                    <sheet>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                            <field name="state"/>
+                            <field name="processing_date"/>
+                            <field name="processing_id"/>
+                        </group>
+                        <footer>
+                            <!-- Botón para enviar la trazabilidad a la API -->
+                            <button name="send_product_trazability" string="Enviar a la API" type="object" class="oe_highlight"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción para abrir las vistas de lista y formulario -->
+        <record id="action_traceability_medicamento" model="ir.actions.act_window">
+            <field name="name">Trazabilidad de Medicamentos</field>
+            <field name="res_model">traceability.medicamento</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menú para acceder a las vistas -->
+        <menuitem id="menu_traceability_medicamento_root" name="Trazabilidad de Medicamentos" parent="stock.menu_stock_root"/>
+        <menuitem id="menu_traceability_medicamento" name="Registros de Trazabilidad" parent="menu_traceability_medicamento_root" action="action_traceability_medicamento"/>
+
+    </data>
+</odoo>
